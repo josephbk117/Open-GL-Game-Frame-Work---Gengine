@@ -7,7 +7,6 @@ namespace Gengine {
 	{
 	}
 
-
 	Camera2D::~Camera2D()
 	{
 	}

@@ -20,7 +20,7 @@ void MainGame::run()
 	_sprites.push_back(new Sprite());
 	_sprites.back()->init(0.0f, 0.0f, _screenWidth/2, _screenWidth / 2, "C:/Users/josep_000/Documents/Visual Studio 2017/Projects/openGlLaeranWithSDL/Textures/PlanetProctorTimeslow.png");
 	_sprites.push_back(new Sprite());
-	_sprites.back()->init(_screenWidth/2, 0.0, _screenWidth / 2, _screenWidth / 2, "C:/Users/josep_000/Documents/Visual Studio 2017/Projects/openGlLaeranWithSDL/Textures/PlanetProctorTimeslow.png");
+	_sprites.back()->init(900.0f, 0.0, _screenWidth / 2, _screenWidth / 2, "C:/Users/josep_000/Documents/Visual Studio 2017/Projects/openGlLaeranWithSDL/Textures/PlanetProctorTimeslow.png");
 	
 
 	std::cout << "Open gl version : " << glGetString(GL_VERSION);
