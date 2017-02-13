@@ -7,6 +7,7 @@
 #include <Gengine/Window.h>
 #include <Gengine/Camera2D.h>
 #include <vector>
+#include <Gengine/SpriteBatch.h>
 
 using namespace Gengine;
 enum class GameState
@@ -23,12 +24,11 @@ private:
 	int _screenWidth;
 	int _screenHeight;
 	GameState _gameState;
-	//Sprite collection
-	std::vector <Sprite*> _sprites;
 
 	GLSLProgram _colourProgram;
 	GLTexture _playerTexture;
 	Camera2D _camera;
+	SpriteBatch _spriteBatch;
 	float _time;
 	float _fps;
 	float _frameTime;

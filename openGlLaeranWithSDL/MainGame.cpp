@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <Gengine/Gengine.h>
+#include <Gengine/SpriteBatch.h>
+#include <Gengine/ResourceManager.h>
 using namespace Gengine;
 MainGame::MainGame() : _time(0.0f),_screenWidth(1024),_screenHeight(720),_gameState(GameState::PLAY)
 {
@@ -17,11 +19,6 @@ void MainGame::run()
 {
 	
 	initSystems();
-	_sprites.push_back(new Sprite());
-	_sprites.back()->init(0.0f, 0.0f, _screenWidth/2, _screenWidth / 2, "C:/Users/josep_000/Documents/Visual Studio 2017/Projects/openGlLaeranWithSDL/Textures/PlanetProctorTimeslow.png");
-	_sprites.push_back(new Sprite());
-	_sprites.back()->init(900.0f, 0.0, _screenWidth / 2, _screenWidth / 2, "C:/Users/josep_000/Documents/Visual Studio 2017/Projects/openGlLaeranWithSDL/Textures/PlanetProctorTimeslow.png");
-	
 
 	std::cout << "Open gl version : " << glGetString(GL_VERSION);
 	gameLoop();
@@ -32,6 +29,7 @@ void MainGame::initSystems()
 	init();
 	_window.create("Game Engine v 0.0.1", _screenWidth, _screenHeight, 0);
 	initShaders();
+	_spriteBatch.init();
 	
 }
 //TODO : Fix path problem
@@ -43,6 +41,7 @@ void MainGame::initShaders()
 	_colourProgram.addAttribute("vertexColor");
 	_colourProgram.addAttribute("vertexUV");
 	_colourProgram.linkShaders();
+
 }
 
 void MainGame::gameLoop()
@@ -113,11 +112,17 @@ void MainGame::drawGame()
 
 	glUniformMatrix4fv(PLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
 
-	//----Draw all sprites
-	for (int i = 0; i < _sprites.size(); i++)
-	{
-		_sprites[i]->draw();
-	}
+	_spriteBatch.begin();
+
+	glm::vec4 pos(0.0f, 0.0f, 50.0f, 50.0f);
+	glm::vec4 uv(0.0f,0.0f, 1.0f, 1.0f);
+	static GLTexture texture = ResourceManager::getTexture("C:/Users/josep_000/Documents/Visual Studio 2017/Projects/openGlLaeranWithSDL/Textures/PlanetProctorTimeslow.png");
+	Colour col;
+	col.a = 255; col.r = 255; col.g = 255; col.b = 255;
+	_spriteBatch.draw(pos, uv, texture.id, 0.0f, col);
+
+	_spriteBatch.end();
+	_spriteBatch.renderBatch();
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	_colourProgram.unUse();
