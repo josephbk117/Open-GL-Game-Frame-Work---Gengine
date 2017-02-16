@@ -71,25 +71,36 @@ void MainGame::processInput()
 			case SDL_MOUSEMOTION: 
 				break;
 			case SDL_KEYDOWN:
-				switch (evnt.key.keysym.sym)
-				{
-				case SDLK_w: _camera.setPosition(_camera.getPosition() + glm::vec2(0.0, 5.0));
-					break;
-				case SDLK_s: _camera.setPosition(_camera.getPosition() + glm::vec2(0.0, -5.0));
-					break;
-				case SDLK_a: _camera.setPosition(_camera.getPosition() + glm::vec2(5.0, 0.0));
-					break;
-				case SDLK_d: _camera.setPosition(_camera.getPosition() + glm::vec2(-5.0, 0.0));
-					break;
-				case SDLK_q: _camera.setScale(_camera.getScale() + SCALE_SPEED);
-					break;
-				case SDLK_e: _camera.setScale(_camera.getScale() - SCALE_SPEED);
-					break;
-				}
-				break;
+				_inputManager.pressKey(evnt.key.keysym.sym); break;
+			case SDL_KEYUP:
+				_inputManager.releaseKey(evnt.key.keysym.sym); break;
 		}
 	}
-
+	if (_inputManager.isKeyPressed(SDLK_w))
+	{
+		_camera.setPosition(_camera.getPosition() + glm::vec2(0.0, 1.0));
+	}
+	if (_inputManager.isKeyPressed(SDLK_s))
+	{
+		_camera.setPosition(_camera.getPosition() + glm::vec2(0.0, -1.0));
+	}
+	if (_inputManager.isKeyPressed(SDLK_a))
+	{
+		_camera.setPosition(_camera.getPosition() + glm::vec2(1.0, 0.0));
+	}
+	if (_inputManager.isKeyPressed(SDLK_d))
+	{
+		_camera.setPosition(_camera.getPosition() + glm::vec2(-1.0, 0.0));
+	}
+	if (_inputManager.isKeyPressed(SDLK_q))
+	{
+		_camera.setScale(_camera.getScale() + SCALE_SPEED);
+	}
+	if (_inputManager.isKeyPressed(SDLK_e))
+	{
+		_camera.setScale(_camera.getScale() - SCALE_SPEED);
+	}
+	
 }
 
 void MainGame::drawGame()

@@ -6,6 +6,7 @@
 #include <Gengine/GLTexture.h>
 #include <Gengine/Window.h>
 #include <Gengine/Camera2D.h>
+#include <Gengine/InputManager.h>
 #include <vector>
 #include <Gengine/SpriteBatch.h>
 
@@ -29,6 +30,7 @@ private:
 	GLTexture _playerTexture;
 	Camera2D _camera;
 	SpriteBatch _spriteBatch;
+	InputManager _inputManager;
 	float _time;
 	float _fps;
 	float _frameTime;
