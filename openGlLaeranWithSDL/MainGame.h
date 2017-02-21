@@ -7,7 +7,7 @@
 #include <Gengine/Window.h>
 #include <Gengine/Camera2D.h>
 #include <Gengine/InputManager.h>
-#include <Gengine/FpsLimiter.h>
+#include <Gengine/FrameRateLimiter.h>
 #include <vector>
 #include <Gengine/SpriteBatch.h>
 
@@ -26,6 +26,7 @@ private:
 	int _screenWidth;
 	int _screenHeight;
 	GameState _gameState;	
+	FrameRateLimiter _fpsLimiter;
 	
 
 	GLSLProgram _colourProgram;
@@ -35,7 +36,7 @@ private:
 	InputManager _inputManager;
 	float _time;
 	float _fps;
-	float _frameTime;
+	float _maxFps;
 #pragma endregion
 
 #pragma region privateFunctions
@@ -44,7 +45,6 @@ private:
 	void gameLoop();
 	void processInput();
 	void drawGame();
-	void calculateFps();
 #pragma endregion
 	
 public:

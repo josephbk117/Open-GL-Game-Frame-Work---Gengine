@@ -11,6 +11,6 @@ namespace Gengine {
 		int tmp;
 		std::cin >> tmp;
 		SDL_Quit();
-		exit(1);
+		exit(1);		
 	}
 }

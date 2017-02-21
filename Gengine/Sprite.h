@@ -4,7 +4,7 @@
 #include <string>
 namespace Gengine {
 	class Sprite
-	{
+	{		
 
 	private:
 		int _x, _y;

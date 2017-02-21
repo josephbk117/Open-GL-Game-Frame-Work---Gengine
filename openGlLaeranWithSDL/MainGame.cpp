@@ -6,7 +6,6 @@
 #include <Gengine/Gengine.h>
 #include <Gengine/SpriteBatch.h>
 #include <Gengine/ResourceManager.h>
-#include <Gengine/FpsLimiter.h>
 using namespace Gengine;
 MainGame::MainGame() : _time(0.0f),_screenWidth(1024),_screenHeight(720),_gameState(GameState::PLAY)
 {
@@ -32,7 +31,7 @@ void MainGame::initSystems()
 	_window.create("Game Engine v 0.0.1", _screenWidth, _screenHeight, 0);
 	initShaders();
 	_spriteBatch.init();
-	
+	_fpsLimiter.init(60.0);
 }
 //TODO : Fix path problem
 void MainGame::initShaders()
@@ -50,14 +49,21 @@ void MainGame::gameLoop()
 {
 	while (_gameState != GameState::EXIT)
 	{
+		_fpsLimiter.begin();
 		processInput();
 
 		_time += 0.01f;
 
 		_camera.update();
 		drawGame();
-		//calculateFps();
-		//std::cout << _fps<<std::endl;
+		_fps = _fpsLimiter.end();
+		static int frameCounter = 0;
+		frameCounter++;
+		if (frameCounter == 10)
+		{
+			std::cout << "Frame rate : " << _fps<<std::endl;
+			frameCounter = 0;
+		}
 	}
 }
 void MainGame::processInput()
@@ -141,44 +147,4 @@ void MainGame::drawGame()
 	_colourProgram.unUse();
 
 	_window.swapBuffer();
-}
-void MainGame::calculateFps() 
-{
-	static const int NUM_SAMPLES = 10;
-	static float frameTimes[NUM_SAMPLES];
-	static int currentFrame = 0;
-
-	static float prevTicks = SDL_GetTicks(); //Only sets in the first frame
-	static float currentTicks;
-
-	currentTicks = SDL_GetTicks(); //Changed every frame
-	_frameTime = currentTicks - prevTicks;
-	frameTimes[currentFrame % NUM_SAMPLES] = _frameTime;
-
-	prevTicks = currentTicks;
-
-	int count;
-	if (currentFrame < NUM_SAMPLES)
-	{
-		count = currentFrame;
-	}
-	else
-	{
-		count = NUM_SAMPLES;
-		float frameTimeAvg = 0;
-		for (int i = 0; i < count; i++)
-		{
-			frameTimeAvg += frameTimes[i];
-		}
-		frameTimeAvg /= count;
-		if (frameTimeAvg > 0)
-		{
-			_fps = 1000.0f / frameTimeAvg;
-		}
-		else 
-		{
-			_fps = 60.0;
-		}
-	}
-	currentFrame++;
 }

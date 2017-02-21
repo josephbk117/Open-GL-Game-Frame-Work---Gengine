@@ -57,7 +57,7 @@
     <ClCompile Include="InputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FpsLimiter.cpp">
+    <ClCompile Include="FrameRateLimiter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -107,7 +107,7 @@
     <ClInclude Include="InputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FpsLimiter.h">
+    <ClInclude Include="FrameRateLimiter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
