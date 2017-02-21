@@ -7,6 +7,7 @@
 #include <Gengine/Window.h>
 #include <Gengine/Camera2D.h>
 #include <Gengine/InputManager.h>
+#include <Gengine/FpsLimiter.h>
 #include <vector>
 #include <Gengine/SpriteBatch.h>
 
@@ -24,7 +25,8 @@ private:
 	Window _window;
 	int _screenWidth;
 	int _screenHeight;
-	GameState _gameState;
+	GameState _gameState;	
+	
 
 	GLSLProgram _colourProgram;
 	GLTexture _playerTexture;

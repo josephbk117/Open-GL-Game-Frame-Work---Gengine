@@ -6,6 +6,7 @@
 #include <Gengine/Gengine.h>
 #include <Gengine/SpriteBatch.h>
 #include <Gengine/ResourceManager.h>
+#include <Gengine/FpsLimiter.h>
 using namespace Gengine;
 MainGame::MainGame() : _time(0.0f),_screenWidth(1024),_screenHeight(720),_gameState(GameState::PLAY)
 {
@@ -14,6 +15,7 @@ MainGame::MainGame() : _time(0.0f),_screenWidth(1024),_screenHeight(720),_gameSt
 
 MainGame::~MainGame()
 {
+	
 }
 void MainGame::run()
 {
