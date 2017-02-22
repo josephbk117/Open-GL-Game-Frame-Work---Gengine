@@ -14,7 +14,7 @@ namespace Gengine {
 	{
 		if (_needsMatrixUpdate)
 		{
-			glm::vec3 translate(-_position.x, -_position.y, 0.0f);
+			glm::vec3 translate(-_position.x + _screenWidth/2, -_position.y + _screenHeight/2, 0.0f);
 			_cameraMatrix = glm::translate(_orthoMatrix, translate);
 			glm::vec3 scale(_scale, _scale, 0.0f);
 			_cameraMatrix = glm::scale(_cameraMatrix, scale);
@@ -26,5 +26,18 @@ namespace Gengine {
 		_screenWidth = screenWidth;
 		_screenHeight = screenHeight;
 		_orthoMatrix = glm::ortho(0.0f, (float)_screenWidth, 0.0f, (float)_screenHeight);
+	}
+	glm::vec2 Camera2D::getWorldCoordsFromScreen(glm::vec2 screenCoords)
+	{
+		//Invert Y
+		screenCoords.y = _screenHeight - screenCoords.y;
+		screenCoords -= glm::vec2(_screenWidth / 2, _screenHeight / 2); //Makes 0 the center of the screen
+		//Scale the coordinates
+		screenCoords /= _scale;
+		//Translate with the camera position
+		screenCoords += _position;
+
+		return screenCoords;
+
 	}
 }

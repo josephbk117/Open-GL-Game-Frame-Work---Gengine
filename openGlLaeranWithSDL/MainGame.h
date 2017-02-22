@@ -11,6 +11,8 @@
 #include <vector>
 #include <Gengine/SpriteBatch.h>
 
+#include "Bullet.h"
+
 using namespace Gengine;
 enum class GameState
 {
@@ -28,6 +30,8 @@ private:
 	GameState _gameState;	
 	FrameRateLimiter _fpsLimiter;
 	
+
+	std::vector<Bullet> _bullets;
 
 	GLSLProgram _colourProgram;
 	GLTexture _playerTexture;

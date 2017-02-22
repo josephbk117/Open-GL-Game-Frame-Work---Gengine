@@ -25,5 +25,6 @@ namespace Gengine {
 		glm::vec2 getPosition() { return _position; }
 		float getScale() { return _scale; }
 		glm::mat4 getCameraMatrix() { return _cameraMatrix; }
+		glm::vec2 getWorldCoordsFromScreen(glm::vec2 screenCoords);
 	};
 }

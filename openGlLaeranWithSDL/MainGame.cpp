@@ -31,7 +31,7 @@ void MainGame::initSystems()
 	_window.create("Game Engine v 0.0.1", _screenWidth, _screenHeight, 0);
 	initShaders();
 	_spriteBatch.init();
-	_fpsLimiter.init(60.0);
+	_fpsLimiter.init(100.0);
 }
 //TODO : Fix path problem
 void MainGame::initShaders()
@@ -55,11 +55,24 @@ void MainGame::gameLoop()
 		_time += 0.01f;
 
 		_camera.update();
+
+		//Update all bullets
+		for (int i = 0; i < _bullets.size();)
+		{
+			if (_bullets[i].update())
+			{
+				_bullets[i] = _bullets.back();
+				_bullets.pop_back();
+			}
+			else
+				i++;
+		}
+
 		drawGame();
 		_fps = _fpsLimiter.end();
 		static int frameCounter = 0;
 		frameCounter++;
-		if (frameCounter == 10)
+		if (frameCounter == 1000)
 		{
 			std::cout << "Frame rate : " << _fps<<std::endl;
 			frameCounter = 0;
@@ -75,13 +88,17 @@ void MainGame::processInput()
 	{
 		switch (evnt.type)
 		{
-			case SDL_QUIT: _gameState = GameState::EXIT; break;
-			case SDL_MOUSEMOTION: 
-				break;
+			case SDL_QUIT: _gameState = GameState::EXIT; break;			
 			case SDL_KEYDOWN:
 				_inputManager.pressKey(evnt.key.keysym.sym); break;
 			case SDL_KEYUP:
 				_inputManager.releaseKey(evnt.key.keysym.sym); break;
+			case SDL_MOUSEBUTTONUP:
+				_inputManager.pressKey(evnt.button.button); break;
+			case SDL_MOUSEBUTTONDOWN:
+				_inputManager.releaseKey(evnt.button.button); break;
+			case SDL_MOUSEMOTION:
+				_inputManager.setMouseCoords(evnt.motion.x,evnt.motion.y); break;
 		}
 	}
 	if (_inputManager.isKeyPressed(SDLK_w))
@@ -107,6 +124,17 @@ void MainGame::processInput()
 	if (_inputManager.isKeyPressed(SDLK_e))
 	{
 		_camera.setScale(_camera.getScale() - SCALE_SPEED);
+	}
+	if (_inputManager.isKeyPressed(SDL_BUTTON_LEFT))
+	{
+		glm::vec2 mouseCoords = _inputManager.getMouseCoords();
+		mouseCoords = _camera.getWorldCoordsFromScreen(mouseCoords);
+		
+		glm::vec2 playerPosition(0.0);
+		glm::vec2 direction = mouseCoords - playerPosition;
+		direction = glm::normalize(direction);
+
+		_bullets.emplace_back(playerPosition,direction,10.0f,1000);
 	}
 	
 }
@@ -139,6 +167,11 @@ void MainGame::drawGame()
 	Colour col;
 	col.a = 255; col.r = 255; col.g = 255; col.b = 255;
 	_spriteBatch.draw(pos, uv, texture.id, 0.0f, col);
+
+	for (int i = 0; i < _bullets.size(); i++)
+	{
+		_bullets[i].draw(_spriteBatch);
+	}
 
 	_spriteBatch.end();
 	_spriteBatch.renderBatch();

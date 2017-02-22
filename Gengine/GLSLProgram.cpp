@@ -19,13 +19,13 @@ namespace Gengine {
 		_vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
 		if (_vertexShaderID == 0)
 		{
-			fatalError("Vertex shader failed to compile");
+			fatalError("Vertex shader failed to complie");
 		}
 
 		_fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 		if (_fragmentShaderID == 0)
 		{
-			fatalError("Fragment shader failed to compile");
+			fatalError("Fragment shader failed to complie");
 		}
 		compileShader(vertexShaderFilePath, _vertexShaderID);
 		compileShader(fragmentShaderFilePath, _fragmentShaderID);

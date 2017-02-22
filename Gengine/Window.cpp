@@ -45,6 +45,11 @@ namespace Gengine {
 		}
 
 		glClearColor(0, 0.5, 0.5, 1.0);
+		//Set Vsync
+		SDL_GL_SetSwapInterval(0);
+		//Enable Blending
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		return 0;
 	}
